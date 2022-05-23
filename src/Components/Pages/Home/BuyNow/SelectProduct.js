@@ -7,7 +7,7 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
     <div className="container mx-auto my-24">
       <div className="grid h-full md:grid-cols-2 lg:grid-cols-3  gap-5 items-center ">
         <div className="w-full flex justify-center  lg:justify-end">
-          <img className="" src={img} alt="" />
+          <img className="lg:w-[500px]" src={img} alt="" />
         </div>
 
         <div className="lg:col-span-2  flex justify-center">
@@ -15,7 +15,7 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
             <table class="max-w-lg border-separate border border-slate-400 ">
               <thead>
                 <tr>
-                  <th colSpan={"2"} class="border border-slate-300 ">
+                  <th colSpan={"2"} class="border p-2 border-slate-300 ">
                     Details
                   </th>
                 </tr>
