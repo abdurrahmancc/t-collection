@@ -15,7 +15,7 @@ const RequireAuth = ({ children }) => {
   if (!user) {
     return <Navigate to={"/login"} state={{ from: location }} replace />;
   }
-  return <Outlet />;
+  return children || <Outlet />;
 };
 
 export default RequireAuth;
