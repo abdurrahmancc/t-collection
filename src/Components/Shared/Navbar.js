@@ -4,10 +4,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../Assets/logo.png";
 import auth from "../Hooks/Firebase";
+import Loading from "../Loading/Loading";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = ({ children }) => {
   const [user, loading, error] = useAuthState(auth);
   const [darkToggle, setDarkToggle] = useState(false);
+  console.log(user?.photoURL);
+  if (loading) {
+    return <Loading />;
+  }
   const navItems = (
     <>
       <li className=" py-2">
@@ -47,7 +53,11 @@ const Navbar = ({ children }) => {
       <div class="dropdown  dropdown-end flex items-center ">
         <label tabindex="0" class="btn btn-ghost  btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img src="https://api.lorem.space/image/face?hash=33791" />
+            {user?.photoURL ? (
+              <img src={`${user?.photoURL}`} alt="" />
+            ) : (
+              <FaUserCircle className="w-full h-full" />
+            )}
           </div>
         </label>
         {/*         <ul

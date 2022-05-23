@@ -49,7 +49,7 @@ const Register = () => {
               <div class="card-body">
                 <p className="text-2xl text-center">Sign Up Your Account</p>
                 <div class="form-control">
-                  <label class="label">
+                  <label class="label pb-1">
                     <span class="label-text"> Name</span>
                   </label>
                   <input
@@ -69,7 +69,7 @@ const Register = () => {
                   )}
                 </div>
                 <div class="form-control">
-                  <label class="label">
+                  <label class="label pb-1">
                     <span class="label-text">Email</span>
                   </label>
                   <input
@@ -90,11 +90,11 @@ const Register = () => {
                   )}
                 </div>
                 <div class="form-control">
-                  <label class="label">
+                  <label class="label pb-1">
                     <span class="label-text">Password</span>
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     placeholder="password"
                     class="input input-bordered"
                     {...register("password", {

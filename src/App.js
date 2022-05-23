@@ -11,6 +11,8 @@ import NotFound from "./Components/Pages/NotFound/NotFound";
 import Footer from "./Components/Shared/Footer";
 import Contact from "./Components/Pages/Contact/Contact";
 import Register from "./Components/Pages/Login/Register";
+import RequireAuth from "./Components/Hooks/RequireAuth";
+import BuyNow from "./Components/Pages/Home/BuyNow/BuyNow";
 
 function App() {
   return (
@@ -21,9 +23,25 @@ function App() {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="register" element={<Register />}></Route>
-          <Route path="dashboard" element={<Dashboard />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          ></Route>
+          <Route
+            path="/buyNow/:id"
+            element={
+              <RequireAuth>
+                <BuyNow />
+              </RequireAuth>
+            }
+          ></Route>
+
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
         <Footer />

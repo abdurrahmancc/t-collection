@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import auth from "../../Hooks/Firebase";
 import {
@@ -17,7 +17,10 @@ const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword, sUser, sLoading, sError] = useSignInWithEmailAndPassword(auth);
   const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
-  const [email, setEmail] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     handleSubmit,
@@ -26,6 +29,7 @@ const Login = () => {
     getValues,
     formState: { errors },
   } = useForm();
+  const getEmail = getValues("email");
 
   const onSubmit = async (data) => {
     await signInWithEmailAndPassword(data.email, data.password);
@@ -40,7 +44,10 @@ const Login = () => {
   if (error || gError || sError) {
     console.log(error, gError, sError);
   }
-  const getEmail = getValues("email");
+
+  if (user) {
+    navigate(from, { replace: true });
+  }
 
   console.log(watch("email"), watch("password"));
   return (
@@ -52,7 +59,7 @@ const Login = () => {
               <div class="card-body">
                 <p className="text-2xl text-center">Log in to your account</p>
                 <div class="form-control">
-                  <label class="label">
+                  <label class="label pb-1">
                     <span class="label-text">Email</span>
                   </label>
                   <input
@@ -73,11 +80,11 @@ const Login = () => {
                   )}
                 </div>
                 <div class="form-control">
-                  <label class="label">
+                  <label class="label pb-1">
                     <span class="label-text">Password</span>
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     placeholder="password"
                     class="input input-bordered"
                     {...register("password", {
@@ -94,13 +101,13 @@ const Login = () => {
                         await sendPasswordResetEmail(getEmail);
                         toast("Sent email");
                       }}
-                      class="label-text-alt link link-hover"
+                      class="label-text-alt  link link-hover"
                     >
                       Forgot password?
                     </span>
                   </label>
                 </div>
-                <div class="form-control mt-6">
+                <div class="form-control mt-3">
                   <button type="submit" class="btn btn-primary">
                     Login
                   </button>

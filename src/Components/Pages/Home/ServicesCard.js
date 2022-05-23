@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ServicesCard = ({ service }) => {
-  const { name, price, img, description, quantity, available } = service;
+  const { _id, name, price, img, description, quantity, available } = service;
   return (
     <>
       <div class="card card-compact max-w-lg bg-base-100 shadow-2xl">
@@ -36,7 +37,9 @@ const ServicesCard = ({ service }) => {
                 <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" />
               </span>
             </p>
-            <button class="btn btn-primary">Buy Now</button>
+            <Link to={`/buyNow/${_id}`} class="btn btn-primary">
+              Buy Now
+            </Link>
           </div>
         </div>
       </div>
