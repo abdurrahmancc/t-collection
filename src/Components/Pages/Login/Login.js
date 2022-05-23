@@ -2,20 +2,45 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
+import auth from "../../Hooks/Firebase";
+import {
+  useAuthState,
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import Loading from "../../Loading/Loading";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword, sUser, sLoading, sError] = useSignInWithEmailAndPassword(auth);
+  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
+  const [email, setEmail] = useState();
   const {
     register,
     handleSubmit,
     watch,
     reset,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    await signInWithEmailAndPassword(data.email, data.password);
+    toast.success("success", { id: "login-Success" });
     reset();
   };
+
+  if (loading || gLoading || sLoading) {
+    return <Loading />;
+  }
+
+  if (error || gError || sError) {
+    console.log(error, gError, sError);
+  }
+  const getEmail = getValues("email");
 
   console.log(watch("email"), watch("password"));
   return (
@@ -64,9 +89,15 @@ const Login = () => {
                     <span className="label-text-alt text-red-500">{errors?.password?.message}</span>
                   )}
                   <label class="label">
-                    <a href="#" class="label-text-alt link link-hover">
+                    <span
+                      onClick={async () => {
+                        await sendPasswordResetEmail(getEmail);
+                        toast("Sent email");
+                      }}
+                      class="label-text-alt link link-hover"
+                    >
                       Forgot password?
-                    </a>
+                    </span>
                   </label>
                 </div>
                 <div class="form-control mt-6">
@@ -74,6 +105,9 @@ const Login = () => {
                     Login
                   </button>
                 </div>
+                {sError && (
+                  <span className="label-text-alt text-red-500 text-center">{sError.message}</span>
+                )}
               </div>
             </form>
             <hr className="py-[0.5px] bg-gray-300" />
@@ -88,7 +122,10 @@ const Login = () => {
           </div>
         </div>
         <div className="text-center">
-          <span className="text-center btn btn-link text-lg text-primary font-semibold underline">
+          <span
+            onClick={() => signInWithGoogle()}
+            className="text-center btn btn-link text-lg text-primary font-semibold underline"
+          >
             Continue with Google
           </span>
         </div>

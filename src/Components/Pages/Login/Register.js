@@ -1,9 +1,17 @@
+import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import logo from "../../Assets/logo.png";
+import auth from "../../Hooks/Firebase";
+import Loading from "../../Loading/Loading";
 
 const Register = () => {
+  const [createUserWithEmailAndPassword, cUser, cLoading, cError] =
+    useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, updating, uError] = useUpdateProfile(auth);
   const {
     register,
     handleSubmit,
@@ -12,10 +20,24 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    toast.success("success", { id: "create-Success" });
     reset();
   };
+
+  if (cLoading) {
+    return <Loading />;
+  }
+
+  if (cUser) {
+    console.log(cUser);
+  }
+
+  if (cError) {
+    console.log(cError);
+  }
 
   console.log(watch("email"), watch("password"));
   return (
@@ -84,11 +106,15 @@ const Register = () => {
                     <span className="label-text-alt text-red-500">{errors?.password?.message}</span>
                   )}
                 </div>
+
                 <div class="form-control mt-6">
                   <button type="submit" class="btn btn-primary">
                     Sign Up
                   </button>
                 </div>
+                {cError && (
+                  <span className="label-text-alt text-red-500 text-center">{cError?.message}</span>
+                )}
               </div>
             </form>
             <hr className="py-[0.5px] bg-gray-300" />

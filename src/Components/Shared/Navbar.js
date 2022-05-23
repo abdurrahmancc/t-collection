@@ -1,8 +1,12 @@
+import { signOut } from "firebase/auth";
 import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import logo from "../Assets/logo.png";
+import auth from "../Hooks/Firebase";
 
 const Navbar = ({ children }) => {
+  const [user, loading, error] = useAuthState(auth);
   const [darkToggle, setDarkToggle] = useState(false);
   const navItems = (
     <>
@@ -27,9 +31,18 @@ const Navbar = ({ children }) => {
         </NavLink>
       </li>
       <li className=" py-2">
-        <NavLink to={"/login"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
-          LOGIN
-        </NavLink>
+        {user ? (
+          <span
+            onClick={() => signOut(auth)}
+            className="rounded-lg hover:text-orange-400 font-bold btn-sm"
+          >
+            LOG OUT
+          </span>
+        ) : (
+          <NavLink to={"/login"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
+            LOGIN
+          </NavLink>
+        )}
       </li>
       <div class="dropdown  dropdown-end flex items-center ">
         <label tabindex="0" class="btn btn-ghost  btn-circle avatar">
