@@ -1,16 +1,41 @@
 import React from "react";
 
-const ServicesCard = () => {
+const ServicesCard = ({ service }) => {
+  const { name, price, img, description, quantity, available } = service;
   return (
     <>
-      <div class="card card-compact max-w[96px] bg-base-100 shadow-xl">
+      <div class="card card-compact max-w-lg bg-base-100 shadow-2xl">
         <figure>
-          <img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" />
+          <img className="max-h-64 object-contain" src={img} alt="Shoes" />
         </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div class="card-actions justify-end">
+        <div class="card-body text-lg">
+          <h2 class="card-title">{name}</h2>
+          <div className="flex justify-between">
+            <p className="text-lg">Price: ${price}</p>
+            <p className="text-right text-lg">min-order: {quantity}</p>
+          </div>
+          <p className="text-lg">Available: {available}</p>
+          {description.length > 60 ? (
+            <p className="text-lg">Description: {description.slice(0, 60)}...</p>
+          ) : (
+            <p className="text-lg">Description:{description} </p>
+          )}
+          <div class="card-actions h-full items-center justify-end">
+            <p className="flex items-center text-lg h-full ">
+              <span className="mr-3">Rating:</span>{" "}
+              <span className="rating rating-xs">
+                <input type="radio" name="rating-5" class="mask mask-star-2 bg-orange-400" />
+                <input
+                  type="radio"
+                  name="rating-5"
+                  class="mask mask-star-2 bg-orange-400"
+                  checked
+                />
+                <input type="radio" name="rating-5" class="mask mask-star-2 bg-orange-400" />
+                <input type="radio" name="rating-5" class="mask mask-star-2 bg-orange-400" />
+                <input type="radio" name="rating-3" class="mask mask-star-2 bg-orange-400" />
+              </span>
+            </p>
             <button class="btn btn-primary">Buy Now</button>
           </div>
         </div>

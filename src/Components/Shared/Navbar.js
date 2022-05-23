@@ -7,22 +7,27 @@ const Navbar = ({ children }) => {
   const navItems = (
     <>
       <li className=" py-2">
-        <NavLink to={"/home"} className="rounded-lg btn-sm">
+        <NavLink to={"/home"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
           HOME
         </NavLink>
       </li>
       <li className=" py-2">
-        <NavLink to={"/about"} className="rounded-lg  btn-sm">
+        <NavLink to={"/about"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
           ABOUT
         </NavLink>
       </li>
       <li className=" py-2">
-        <NavLink to={"/dashboard"} className="rounded-lg  btn-sm">
+        <NavLink to={"/contact"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
+          CONTACT
+        </NavLink>
+      </li>
+      <li className=" py-2">
+        <NavLink to={"/dashboard"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
           DASHBOARD
         </NavLink>
       </li>
       <li className=" py-2">
-        <NavLink to={"/login"} className="rounded-lg btn-sm">
+        <NavLink to={"/login"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
           LOGIN
         </NavLink>
       </li>
@@ -77,15 +82,19 @@ const Navbar = ({ children }) => {
 
   return (
     <div>
-      <div class="drawer drawer-end">
+      <div class="drawer drawer-end" data-theme={darkToggle ? "dark" : "light"}>
         <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content flex flex-col ">
           {/* <!-- Navbar --> */}
-          <div data-theme={darkToggle ? "dark" : "light"} class="w-full  navbar bg-base-300">
+          <div class="w-full text-white navbar bg-[#120E43]">
             <div className="container mx-auto">
               <div class="flex-1  px-2 mx-2">
-                <Link to={"/"}>
+                {/* <Link to={"/"}>
                   <img className="w-3/12" src={logo} alt="" />
+                </Link> */}
+                <Link to={"/"}>
+                  <strong className="text-5xl  text-[#FFC000]">T</strong>
+                  <strong className="text-3xl  text-white">- COLLECTION</strong>
                 </Link>
               </div>
               <div class="flex-none lg:hidden">
