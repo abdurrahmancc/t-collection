@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import img from "../Assets/logo.png";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+
   return (
     <>
-      <footer>
+      <footer className={` ${pathname.includes("dashboard") && "hidden"}`}>
         <div className=" px-20 py-20  bg-[#120e43e0] text-neutral  text-lg">
           <div className="grid md:grid-cols-2   grid-cols-1 lg:grid-cols-4  gap-5">
             <div className="mt-[-12px]">
@@ -19,32 +21,32 @@ const Footer = () => {
               </p>
             </div>
             <div>
-              <span class=" pb-1 border-b-2 border-white  font-bold uppercase text-xl text-white">
+              <span className=" pb-1 border-b-2 border-white  font-bold uppercase text-xl text-white">
                 Information
               </span>
-              <p class="link link-hover mt-5">Our company</p>
-              <p class="link link-hover">Contact us</p>
-              <p class="link link-hover">Contact us</p>
-              <p class="link link-hover">Contact us</p>
-              <p class="link link-hover">Careers</p>
+              <p className="link link-hover mt-5">Our company</p>
+              <p className="link link-hover">Contact us</p>
+              <p className="link link-hover">Contact us</p>
+              <p className="link link-hover">Contact us</p>
+              <p className="link link-hover">Careers</p>
             </div>
 
             <div>
-              <span class="pb-1 border-b-2 border-white  font-bold uppercase text-xl text-white">
+              <span className="pb-1 border-b-2 border-white  font-bold uppercase text-xl text-white">
                 Legal
               </span>
-              <p class="link link-hover mt-5">Terms of use</p>
-              <p class="link link-hover">Privacy policy</p>
-              <p class="link link-hover">Cookie policy</p>
+              <p className="link link-hover mt-5">Terms of use</p>
+              <p className="link link-hover">Privacy policy</p>
+              <p className="link link-hover">Cookie policy</p>
             </div>
             <div>
-              <span class="pb-1 border-b-2 border-white mb-2 font-bold uppercase text-xl text-white">
+              <span className="pb-1 border-b-2 border-white mb-2 font-bold uppercase text-xl text-white">
                 Store Information
               </span>
-              <p class="link link-hover mt-5">2005 Stokes Isle Apartment. 896,</p>
-              <p class="link link-hover">Washington 10010, USA</p>
-              <p class="link link-hover">https://example.com</p>
-              <p class="link link-hover">(+68) 120034509</p>
+              <p className="link link-hover mt-5">2005 Stokes Isle Apartment. 896,</p>
+              <p className="link link-hover">Washington 10010, USA</p>
+              <p className="link link-hover">https://example.com</p>
+              <p className="link link-hover">(+68) 120034509</p>
             </div>
           </div>
         </div>

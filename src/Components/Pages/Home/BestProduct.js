@@ -9,12 +9,17 @@ const BestProduct = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  if (services?.data) {
+    services.data.length = 4;
+  }
+
   return (
     <div className="container mx-auto mt-24">
       <div className="mb-10">
         <h1 className="text-center  text-4xl font-bold ">BEST SELLER</h1>
         <div className="text-center">
-          <progress class="progress h-1 bg-warning w-56">hellooooooooooooooo</progress>
+          <progress className="progress h-1 bg-warning w-56">hellooooooooooooooo</progress>
         </div>
         <p className="text-center mt-3">
           All best seller product are now available for you and your can buy <br /> this product

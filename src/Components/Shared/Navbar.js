@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import logo from "../Assets/logo.png";
 import auth from "../Hooks/Firebase";
 import Loading from "../Loading/Loading";
@@ -10,7 +10,8 @@ import { FaUserCircle } from "react-icons/fa";
 const Navbar = ({ children }) => {
   const [user, loading] = useAuthState(auth);
   const [darkToggle, setDarkToggle] = useState(false);
-  console.log(user?.photoURL);
+  const { pathname } = useLocation();
+
   if (loading) {
     return <Loading />;
   }
@@ -50,9 +51,9 @@ const Navbar = ({ children }) => {
           </NavLink>
         )}
       </li>
-      <div class="dropdown  dropdown-end flex items-center ">
-        <label tabindex="0" class="btn btn-ghost  btn-circle avatar">
-          <div class="w-10 rounded-full">
+      <div className="dropdown  dropdown-end flex items-center ">
+        <label tabIndex="0" className="btn btn-ghost  btn-circle avatar">
+          <div className="w-10 rounded-full">
             {user?.photoURL ? (
               <img src={`${user?.photoURL}`} alt="" />
             ) : (
@@ -61,13 +62,13 @@ const Navbar = ({ children }) => {
           </div>
         </label>
         {/*         <ul
-          tabindex="0"
-          class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          tabIndex="0"
+          className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <a class="justify-between">
+            <a className="justify-between">
               Profile
-              <span class="badge">New</span>
+              <span className="badge">New</span>
             </a>
           </li>
           <li>
@@ -78,13 +79,13 @@ const Navbar = ({ children }) => {
           </li>
         </ul> */}
       </div>
-      <label class="swap swap-rotate">
+      <label className="swap swap-rotate">
         {/* <!-- this hidden checkbox controls the state --> */}
         <input onClick={() => setDarkToggle(!darkToggle)} type="checkbox" />
 
         {/* <!-- sun icon --> */}
         <svg
-          class="swap-on fill-current w-10 h-10"
+          className="swap-on fill-current w-10 h-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -93,7 +94,7 @@ const Navbar = ({ children }) => {
 
         {/* <!-- moon icon --> */}
         <svg
-          class="swap-off fill-current w-10 h-10"
+          className="swap-off fill-current w-10 h-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -105,58 +106,55 @@ const Navbar = ({ children }) => {
 
   return (
     <div>
-      <div class="drawer drawer-end" data-theme={darkToggle ? "dark" : "light"}>
-        <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col ">
+      <div className="drawer drawer-end" data-theme={darkToggle ? "dark" : "light"}>
+        <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content flex flex-col ">
           {/* <!-- Navbar --> */}
-          <div class="w-full text-white navbar bg-[#120E43]">
+          <div className={`w-full py-10 text-white navbar relative bg-[#120E43] `}>
             <div className="container mx-auto">
-              <div class="flex-none lg:hidden">
-                <label for="dashboard-sidebar" class="btn btn-square btn-ghost">
+              <div className="flex-none lg:hidden">
+                <label htmlFor="dashboard-sidebar" className="btn btn-square btn-ghost">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    class="inline-block w-6 h-6 stroke-current"
+                    className="inline-block w-6 h-6 stroke-current"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M4 6h16M4 12h16M4 18h16"
                     ></path>
                   </svg>
                 </label>
               </div>
-              <div class="flex-1  px-2 mx-2">
-                {/* <Link to={"/"}>
-                  <img className="w-3/12" src={logo} alt="" />
-                </Link> */}
+              <div className="flex-1  px-2 mx-2">
                 <Link to={"/"}>
                   <strong className="text-5xl  text-[#FFC000]">T</strong>
                   <strong className="text-3xl  text-white">- COLLECTION</strong>
                 </Link>
               </div>
-              <div class="flex-none lg:hidden">
-                <label for="my-drawer-3" class="btn btn-square btn-ghost">
+              <div className="flex-none lg:hidden">
+                <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    class="inline-block w-6 h-6 stroke-current"
+                    className="inline-block w-6 h-6 stroke-current"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M4 6h16M4 12h16M4 18h16"
                     ></path>
                   </svg>
                 </label>
               </div>
 
-              <div class="flex-none hidden lg:block">
-                <ul class="menu menu-horizontal gap-3">
+              <div className="flex-none hidden lg:block">
+                <ul className="menu menu-horizontal gap-3">
                   {/* <!-- Navbar menu content here --> */}
 
                   {navItems}
@@ -167,9 +165,9 @@ const Navbar = ({ children }) => {
           {/* <!-- Page content here --> */}
           {children}
         </div>
-        <div class="drawer-side">
-          <label for="my-drawer-3" class="drawer-overlay"></label>
-          <ul class="menu p-4 overflow-y-auto w-80 bg-base-100">
+        <div className="drawer-side">
+          <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
+          <ul className="menu p-4 overflow-y-auto w-80 bg-base-100">
             {/* <!-- Sidebar content here --> */}
             {navItems}
           </ul>

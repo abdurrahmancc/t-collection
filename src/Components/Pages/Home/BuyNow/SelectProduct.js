@@ -12,52 +12,52 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
 
         <div className="lg:col-span-2  flex justify-center">
           <div>
-            <table class="max-w-lg border-separate border border-slate-400 ">
+            <table className="max-w-lg border-separate border border-slate-400 ">
               <thead>
                 <tr>
-                  <th colSpan={"2"} class="border p-2 border-slate-300 ">
+                  <th colSpan={"2"} className="border p-2 border-slate-300 ">
                     Details
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="border p-2 border-slate-300 ">Product Name</td>
-                  <td class="border p-2 border-slate-300 ">{name}</td>
+                  <td className="border p-2 border-slate-300 ">Product Name</td>
+                  <td className="border p-2 border-slate-300 ">{name}</td>
                 </tr>
                 <tr>
-                  <td class="border p-2 border-slate-300 ">Price</td>
-                  <td class="border p-2 border-slate-300 ">{price}</td>
+                  <td className="border p-2 border-slate-300 ">Price</td>
+                  <td className="border p-2 border-slate-300 ">{price}</td>
                 </tr>
                 <tr>
-                  <td class="border p-2 border-slate-300 ">Min-Order</td>
-                  <td class="border p-2 border-slate-300 ">{minOrder}</td>
+                  <td className="border p-2 border-slate-300 ">Min-Order</td>
+                  <td className="border p-2 border-slate-300 ">{minOrder}</td>
                 </tr>
                 <tr>
-                  <td class="border p-2 border-slate-300 ">Quantity</td>
-                  <td class="border p-2 border-slate-300 ">
+                  <td className="border p-2 border-slate-300 ">Quantity</td>
+                  <td className="border p-2 border-slate-300 ">
                     {quantity ? quantity : "provide an positive quantity"}
                   </td>
                 </tr>
                 <tr>
-                  <td class="border p-2 border-slate-300 ">Available</td>
-                  <td class="border p-2 border-slate-300 ">{available}</td>
+                  <td className="border p-2 border-slate-300 ">Available</td>
+                  <td className="border p-2 border-slate-300 ">{available}</td>
                 </tr>
                 <tr>
-                  <td class="border p-2 border-slate-300 ">Description</td>
-                  <td class="border p-2 border-slate-300 ">{description}</td>
+                  <td className="border p-2 border-slate-300 ">Description</td>
+                  <td className="border p-2 border-slate-300 ">{description}</td>
                 </tr>
               </tbody>
             </table>
             <div className="mt-12">
               <form onSubmit={handleSubmitFrom} className="">
-                <div class="form-control">
-                  <label class="input-group">
+                <div className="form-control">
+                  <label className="input-group">
                     <input
                       type="text"
                       name="quantity"
                       placeholder="Enter quantity amount ( Min-order 100 )"
-                      class="input input-bordered w-full"
+                      className="input input-bordered w-full"
                     />
                     <button type="submit" className="btn btn-primary">
                       submit

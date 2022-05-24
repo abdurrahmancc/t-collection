@@ -1,17 +1,27 @@
 import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.png";
 import auth from "../../Hooks/Firebase";
+import useToken from "../../Hooks/useToken";
 import Loading from "../../Loading/Loading";
 
 const Register = () => {
+  const [user, loading] = useAuthState(auth);
   const [createUserWithEmailAndPassword, cUser, cLoading, cError] =
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile, updating, uError] = useUpdateProfile(auth);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [token] = useToken(user);
+
   const {
     register,
     handleSubmit,
@@ -27,8 +37,13 @@ const Register = () => {
     reset();
   };
 
-  if (cLoading) {
+  if (cLoading || loading) {
     return <Loading />;
+  }
+
+  if (token) {
+    const from = location.state?.from?.pathname || "/";
+    navigate(from, { replace: true });
   }
 
   if (cUser) {
@@ -43,24 +58,24 @@ const Register = () => {
   return (
     <div className="grid grid-cols-1 min-h-screen items-center bg-base-200">
       <div className="w-full">
-        <div class="hero  ">
-          <div class="card z-0 flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="hero  ">
+          <div className="card z-0 flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div class="card-body">
+              <div className="card-body">
                 <p className="text-2xl text-center">Sign Up Your Account</p>
-                <div class="form-control">
-                  <label class="label pb-1">
-                    <span class="label-text"> Name</span>
+                <div className="form-control">
+                  <label className="label pb-1">
+                    <span className="label-text"> Name</span>
                   </label>
                   <input
                     type="text"
                     placeholder="Full Name"
-                    class="input input-bordered"
+                    className="input input-bordered"
                     {...register("name", {
                       required: { value: true, message: "Name is require" },
                       pattern: {
                         value: /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/,
-                        message: "Provide a valid email",
+                        message: "Provide a valid name",
                       },
                     })}
                   />
@@ -68,14 +83,14 @@ const Register = () => {
                     <span className="label-text-alt text-red-500">{errors.name?.message}</span>
                   )}
                 </div>
-                <div class="form-control">
-                  <label class="label pb-1">
-                    <span class="label-text">Email</span>
+                <div className="form-control">
+                  <label className="label pb-1">
+                    <span className="label-text">Email</span>
                   </label>
                   <input
                     type="email"
                     placeholder="email"
-                    class="input input-bordered"
+                    className="input input-bordered"
                     {...register("email", {
                       required: { value: true, message: "Email is require" },
                       pattern: {
@@ -89,14 +104,14 @@ const Register = () => {
                     <span className="label-text-alt text-red-500">{errors.email?.message}</span>
                   )}
                 </div>
-                <div class="form-control">
-                  <label class="label pb-1">
-                    <span class="label-text">Password</span>
+                <div className="form-control">
+                  <label className="label pb-1">
+                    <span className="label-text">Password</span>
                   </label>
                   <input
                     type="password"
                     placeholder="password"
-                    class="input input-bordered"
+                    className="input input-bordered"
                     {...register("password", {
                       required: { value: true, message: "Password is require" },
                       pattern: { value: /(?=.*?[A-Z])/, message: "Provide a valid password" },
@@ -107,8 +122,8 @@ const Register = () => {
                   )}
                 </div>
 
-                <div class="form-control mt-6">
-                  <button type="submit" class="btn btn-primary">
+                <div className="form-control mt-6">
+                  <button type="submit" className="btn btn-primary">
                     Sign Up
                   </button>
                 </div>

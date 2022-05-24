@@ -13,12 +13,12 @@ const Newsletter = () => {
           offers
         </p>
         <div className="flex justify-center">
-          <div class="form-control ">
-            <label class="input-group">
+          <div className="form-control ">
+            <label className="input-group">
               <input
                 type="text"
                 placeholder="Enter Your Email Address"
-                class="input input-bordered lg:w-[542px] md:w-[400px]"
+                className="input input-bordered lg:w-[542px] md:w-[400px]"
               />
               <button className="btn btn-primary">SUBSCRIBER</button>
             </label>

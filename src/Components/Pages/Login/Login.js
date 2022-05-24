@@ -11,6 +11,7 @@ import {
 } from "react-firebase-hooks/auth";
 import Loading from "../../Loading/Loading";
 import toast from "react-hot-toast";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -20,6 +21,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const [token] = useToken(user);
 
   const {
     register,
@@ -45,27 +47,26 @@ const Login = () => {
     console.log(error, gError, sError);
   }
 
-  if (user) {
+  if (token) {
     navigate(from, { replace: true });
   }
 
-  console.log(watch("email"), watch("password"));
   return (
     <div className="grid grid-cols-1 min-h-screen items-center bg-base-200">
       <div className="w-full">
-        <div class="hero  ">
-          <div class="card z-0 flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+        <div className="hero  ">
+          <div className="card z-0 flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div class="card-body">
+              <div className="card-body">
                 <p className="text-2xl text-center">Log in to your account</p>
-                <div class="form-control">
-                  <label class="label pb-1">
-                    <span class="label-text">Email</span>
+                <div className="form-control">
+                  <label className="label pb-1">
+                    <span className="label-text">Email</span>
                   </label>
                   <input
                     type="email"
                     placeholder="email"
-                    class="input input-bordered"
+                    className="input input-bordered"
                     {...register("email", {
                       required: { value: true, message: "Email is require" },
                       pattern: {
@@ -79,14 +80,14 @@ const Login = () => {
                     <span className="label-text-alt text-red-500">{errors.email?.message}</span>
                   )}
                 </div>
-                <div class="form-control">
-                  <label class="label pb-1">
-                    <span class="label-text">Password</span>
+                <div className="form-control">
+                  <label className="label pb-1">
+                    <span className="label-text">Password</span>
                   </label>
                   <input
                     type="password"
                     placeholder="password"
-                    class="input input-bordered"
+                    className="input input-bordered"
                     {...register("password", {
                       required: { value: true, message: "Password is require" },
                       pattern: { value: /(?=.*?[A-Z])/, message: "Provide a valid password" },
@@ -95,20 +96,20 @@ const Login = () => {
                   {errors.password?.type === "pattern" && (
                     <span className="label-text-alt text-red-500">{errors?.password?.message}</span>
                   )}
-                  <label class="label">
+                  <label className="label">
                     <span
                       onClick={async () => {
                         await sendPasswordResetEmail(getEmail);
                         toast("Sent email");
                       }}
-                      class="label-text-alt  link link-hover"
+                      className="label-text-alt  link link-hover"
                     >
                       Forgot password?
                     </span>
                   </label>
                 </div>
-                <div class="form-control mt-3">
-                  <button type="submit" class="btn btn-primary">
+                <div className="form-control mt-3">
+                  <button type="submit" className="btn btn-primary">
                     Login
                   </button>
                 </div>
