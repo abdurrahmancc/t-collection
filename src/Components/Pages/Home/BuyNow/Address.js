@@ -14,6 +14,8 @@ const Address = ({ quantity, inputData, isDisabled }) => {
   const navigate = useNavigate();
   const { price, available, email, img, minOrder, name, _id } = inputData;
 
+  console.log(inputData);
+
   let setQuantity;
   let subTotal;
 
@@ -64,8 +66,8 @@ const Address = ({ quantity, inputData, isDisabled }) => {
   const shippingAddress = getValues("Shipping");
   const phoneNumber = getValues("phone");
 
-  const handleNavigate = (id) => {
-    navigate(`/dashboard/payment/${id}`);
+  const handleNavigate = () => {
+    navigate(`/dashboard/my-payment`);
   };
 
   return (
@@ -204,7 +206,7 @@ const Address = ({ quantity, inputData, isDisabled }) => {
                     <tr>
                       <th colSpan={"2"} className="border p-2 border-slate-300 ">
                         <button
-                          onClick={() => handleNavigate(_id)}
+                          onClick={() => handleNavigate()}
                           disabled={isDisabled}
                           className="btn w-full disabled:text-[#ffffff8a] disabled:bg-[#545f5f] btn-primary"
                         >

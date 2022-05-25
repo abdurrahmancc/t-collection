@@ -26,6 +26,8 @@ const MyPayment = () => {
       }
     }
   };
+
+  console.log(orders);
   return (
     <>
       <table className="border-collapse relative bg-[rgb(26,19,78)] table-fixed  w-5/6  ">
@@ -42,8 +44,9 @@ const MyPayment = () => {
               Image
             </th>
             <th colSpan={2}>Pay</th>
-            <th colSpan={2} className={"pr-5 text-center"}>
-              Delete
+
+            <th colSpan={3} className={"pr-5 text-center"}>
+              Delete / T:Id
             </th>
           </tr>
         </thead>
@@ -86,10 +89,21 @@ const MyPayment = () => {
                         </Link>
                       )}
                     </td>
-                    <td colSpan={2} className=" py-2">
-                      <span className="flex justify-center ">
-                        <FaTrashAlt onClick={() => handleDelete(order?._id)} />
-                      </span>
+
+                    <td colSpan={3} className=" py-2">
+                      {order?.transactionId ? (
+                        <span
+                          className="flex justify-center label-text-alt text-white"
+                          title={order?.transactionId}
+                        >
+                          {order?.transactionId.slice(0, 12)}
+                          ...
+                        </span>
+                      ) : (
+                        <span className="flex justify-center">
+                          <FaTrashAlt className="" onClick={() => handleDelete(order?._id)} />
+                        </span>
+                      )}
                     </td>
                   </tr>
                 </>
