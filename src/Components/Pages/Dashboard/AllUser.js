@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useQuery } from "react-query";
 import axiosPrivet from "../../Api/axiosPrivet";
@@ -9,13 +9,15 @@ import { async } from "@firebase/util";
 import { FaTrashAlt } from "react-icons/fa";
 
 const AllUser = () => {
+  const [admin, setAdmin] = useState(null);
   const { data: users, refetch } = useQuery("all-user", () => axiosPrivet.get("all-user"));
 
   //delete product
-  const handleDelete = async (id) => {
+  const handleDelete = async (user) => {
+    const email = { email: user?.email };
     const confirm = window.confirm();
     if (confirm) {
-      const { data } = await axiosPrivet.delete(`/user-delete/${id}`);
+      const { data } = await axiosPrivet.delete(`/user-delete/${user?._id}`, email);
       if (data?.acknowledged) {
         toast.success("Deleted", { id: "delete-user" });
         refetch();
@@ -73,15 +75,15 @@ const AllUser = () => {
                     {user?.role === "admin" ? (
                       <span className="btn w-8/12 btn-sm">admin</span>
                     ) : (
-                      <span onClick={() => handleAddAdmin(user)} className="btn btn-sm">
-                        {" "}
+                      <span onClick={() => handleAddAdmin(user)} className={"btn btn-sm"}>
                         add Admin <FaEdit className="ml-2" />
                       </span>
                     )}
                   </td>
+
                   <td colSpan={1} className="text-right py-2">
                     <span className="w-4 mx-auto">
-                      <FaTrashAlt onClick={() => handleDelete(user?._id)} />
+                      <FaTrashAlt onClick={() => handleDelete(user)} />
                     </span>
                   </td>
                 </tr>

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
   const { available, description, price, img, name, minOrder, _id } = data;
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [inputError, setInputError] = useState("");
 
   return (
     <div className="container mx-auto my-24">
@@ -16,7 +19,7 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
               <thead>
                 <tr>
                   <th colSpan={"2"} className="border p-2 border-slate-300 ">
-                    Details
+                    Product Details
                   </th>
                 </tr>
               </thead>
@@ -56,7 +59,7 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
                     <input
                       type="text"
                       name="quantity"
-                      placeholder="Enter quantity amount ( Min-order 100 )"
+                      placeholder={`Enter quantity amount ( Min-order ${minOrder} )`}
                       className="input input-bordered w-full"
                     />
                     <button type="submit" className="btn btn-primary">
@@ -64,6 +67,7 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
                     </button>
                   </label>
                   {error && <span className="label-text-alt text-red-500">{error}</span>}
+                  {inputError && <span className="label-text-alt text-red-500">{inputError}</span>}
                 </div>
               </form>
             </div>

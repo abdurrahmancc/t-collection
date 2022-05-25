@@ -1,7 +1,8 @@
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 
-const AddAdminConfirm = ({ handleAddAdmin, user }) => {
+const AddAdminConfirm = ({ id }) => {
+  console.log(id);
   return (
     <>
       {/* <!-- The button to open modal --> */}
@@ -19,7 +20,7 @@ const AddAdminConfirm = ({ handleAddAdmin, user }) => {
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-[#120E43] ">
           <h3 className="font-bold text-center text-xl my-10">
-            Do you sure want to add {user?.name} as admin ?
+            Do you sure want to add {id} as admin ?
           </h3>
 
           <div className="flex justify-around mt-10">
@@ -27,7 +28,7 @@ const AddAdminConfirm = ({ handleAddAdmin, user }) => {
               <span className="btn px-11 ">no</span>
             </label>
             <label
-              onClick={() => handleAddAdmin(user)}
+              // onClick={() => handleAddAdmin(id)}
               htmlFor="confirm-admin-Modal"
               className="btn"
             >

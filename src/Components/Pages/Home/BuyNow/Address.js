@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../../Hooks/Firebase";
 import { FaPhoneAlt } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import axiosPrivet from "../../../Api/axiosPrivet";
+import toast from "react-hot-toast";
+import Loading from "../../../Loading/Loading";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const Address = ({ quantity, data }) => {
-  const [user] = useAuthState(auth);
+const Address = ({ quantity, inputData, isDisabled }) => {
+  const [user, loading] = useAuthState(auth);
+  const [inputError, setInputError] = useState("");
+  const navigate = useNavigate();
+  const { price, available, email, img, minOrder, name, _id } = inputData;
+
   const {
     register,
     handleSubmit,
@@ -15,15 +23,38 @@ const Address = ({ quantity, data }) => {
     formState: { errors },
   } = useForm();
 
+  if (loading) {
+    return <Loading />;
+  }
+
   const onSubmit = async (info) => {
-    console.log(info);
-    // reset();
+    const orderInfo = {
+      price,
+      email,
+      img,
+      productName: name,
+      productId: _id,
+      userName: user?.displayName,
+      quantity,
+      totalPrice: inputData?.price * quantity,
+      address: info.address,
+      shippingAddress: info?.Shipping,
+      phoneNumber: info?.phone,
+    };
+    const { data: order } = await axiosPrivet.post("/order", orderInfo);
+    if (order?.insertedId) {
+      toast.success("order success & please proceed to pay", { id: "order-success" });
+    }
   };
 
   const address = getValues("address");
   const shippingAddress = getValues("Shipping");
   const phoneNumber = getValues("phone");
-  console.log(phoneNumber);
+
+  const handleNavigate = () => {
+    navigate("/dashboard/my-payment");
+  };
+
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -95,13 +126,19 @@ const Address = ({ quantity, data }) => {
                   )}
                 </div>
                 <div className="form-control mt-6">
-                  <button type="submit" className="btn btn-primary">
-                    submit
+                  <button
+                    disabled={isDisabled}
+                    type="submit"
+                    className="btn btn-primary disabled:text-[#ffffff8a] disabled:bg-[#545f5f]"
+                  >
+                    Order
                   </button>
                 </div>
               </div>
             </form>
           </div>
+
+          {/* order and proceed to pay */}
           <>
             <div className="flex justify-center">
               <div>
@@ -148,12 +185,19 @@ const Address = ({ quantity, data }) => {
                       <td className="border p-2 border-slate-300 ">Total</td>
                       <td className="border p-2 border-slate-300 font-bold">
                         {" "}
-                        $ {data?.price * quantity}
+                        $ {inputData?.price * quantity}
                       </td>
                     </tr>
                     <tr>
                       <th colSpan={"2"} className="border p-2 border-slate-300 ">
-                        <button className="btn w-full btn-primary">Proceed to Pay</button>
+                        <button
+                          onClick={() => handleNavigate()}
+                          disabled={isDisabled}
+                          className="btn w-full disabled:text-[#ffffff8a] disabled:bg-[#545f5f] btn-primary"
+                        >
+                          {" "}
+                          Proceed to Pay
+                        </button>
                       </th>
                     </tr>
                   </tbody>

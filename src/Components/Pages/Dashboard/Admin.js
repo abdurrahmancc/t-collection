@@ -9,14 +9,15 @@ import { FaTrashAlt } from "react-icons/fa";
 const Admin = () => {
   const { data: admins, refetch } = useQuery("all-admin", () => axiosPrivet.get("/user/admin"));
 
-  const handleDelete = async (id) => {
-    const { data } = await axiosPrivet.delete(`/user/admin/${id}`);
+  const handleDelete = async (email) => {
+    const { data } = await axiosPrivet.delete(`/admin-delete/${email}`);
     if (data?.acknowledged) {
       toast.success("Deleted Admin", { id: "delete-admin" });
       refetch();
     }
+    console.log(data);
   };
-  console.log(admins);
+  // console.log(admins);
   return (
     <>
       <table className="border-collapse relative bg-[rgb(26,19,78)] table-fixed  w-5/6  ">
@@ -49,7 +50,7 @@ const Admin = () => {
 
                   <td colSpan={1} className="text-right py-2">
                     <span className="w-4 mx-auto">
-                      <FaTrashAlt onClick={() => handleDelete(user?._id)} />
+                      <FaTrashAlt onClick={() => handleDelete(user?.email)} />
                     </span>
                   </td>
                 </tr>

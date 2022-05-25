@@ -4,9 +4,6 @@ import { FaTrashAlt } from "react-icons/fa";
 const ConfirmDeleteModal = ({ product, handleDelete }) => {
   return (
     <>
-      {/* <!-- The button to open modal --> */}
-
-      {/* <!-- Put this part before </body> tag --> */}
       <input type="checkbox" id="confirm-Delete-Modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-[#120E43] ">

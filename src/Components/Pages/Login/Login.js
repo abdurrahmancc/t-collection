@@ -35,8 +35,6 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     await signInWithEmailAndPassword(data.email, data.password);
-    toast.success("success", { id: "login-Success" });
-    reset();
   };
 
   if (loading || gLoading || sLoading) {
@@ -48,6 +46,8 @@ const Login = () => {
   }
 
   if (token) {
+    toast.success("success", { id: "login-Success" });
+    reset();
     navigate(from, { replace: true });
   }
 

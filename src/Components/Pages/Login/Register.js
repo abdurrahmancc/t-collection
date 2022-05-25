@@ -21,7 +21,7 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [token] = useToken(user);
-
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -30,28 +30,18 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  if (cLoading || loading || updating) {
+    return <Loading />;
+  }
+
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
     toast.success("success", { id: "create-Success" });
-    reset();
   };
 
-  if (cLoading || loading) {
-    return <Loading />;
-  }
-
   if (token) {
-    const from = location.state?.from?.pathname || "/";
     navigate(from, { replace: true });
-  }
-
-  if (cUser) {
-    console.log(cUser);
-  }
-
-  if (cError) {
-    console.log(cError);
   }
 
   console.log(watch("email"), watch("password"));

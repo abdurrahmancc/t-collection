@@ -5,10 +5,12 @@ import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import Fetcher from "../../../Api/Fetcher";
 import Loading from "../../../Loading/Loading";
+import toast from "react-hot-toast";
 
 const BuyNow = () => {
   const [error, setError] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const { id } = useParams();
   const { data, isLoading } = useQuery(["buyNow", id], () => Fetcher.get(`/buyNow/${id}`));
@@ -16,14 +18,27 @@ const BuyNow = () => {
     return <Loading></Loading>;
   }
 
+  console.log(data);
   const handleSubmitFrom = (e) => {
     e.preventDefault();
-    console.log(e.target.quantity.value);
-    if (e.target.quantity.value < 100) {
-      return setError("minimum order 100");
+    const available = parseInt(data?.data?.available);
+    const quantity = parseInt(e.target.quantity.value);
+    console.log(available, quantity);
+
+    if (quantity < 100) {
+      setIsDisabled(true);
+      toast.error("error");
+      setError("minimum order 100");
+      return;
     }
-    if (e.target.quantity.value >= 100) {
-      setQuantity(e.target.quantity.value);
+    if (available < quantity) {
+      setIsDisabled(true);
+      setError("not available");
+      return;
+    }
+    if (quantity >= 100 && available > quantity) {
+      setQuantity(quantity);
+      setIsDisabled(false);
       setError(" ");
       e.target.reset();
     } else {
@@ -38,7 +53,7 @@ const BuyNow = () => {
         quantity={quantity}
         handleSubmitFrom={handleSubmitFrom}
       />
-      <Address data={data.data} quantity={quantity} />
+      <Address inputData={data.data} isDisabled={isDisabled} quantity={quantity} />
     </div>
   );
 };
