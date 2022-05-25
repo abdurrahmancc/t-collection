@@ -14,29 +14,31 @@ const BuyNow = () => {
 
   const { id } = useParams();
   const { data, isLoading } = useQuery(["buyNow", id], () => Fetcher.get(`/buyNow/${id}`));
+
   if (isLoading) {
     return <Loading></Loading>;
   }
 
-  console.log(data);
   const handleSubmitFrom = (e) => {
     e.preventDefault();
+    const minOrder = parseInt(data?.data?.minOrder);
     const available = parseInt(data?.data?.available);
     const quantity = parseInt(e.target.quantity.value);
     console.log(available, quantity);
 
-    if (quantity < 100) {
+    if (quantity < minOrder) {
       setIsDisabled(true);
-      toast.error("error");
+      toast.error("error", { id: "input-quantity-error" });
       setError("minimum order 100");
       return;
     }
     if (available < quantity) {
       setIsDisabled(true);
       setError("not available");
+      toast.error("not available", { id: "input-quantity-error" });
       return;
     }
-    if (quantity >= 100 && available > quantity) {
+    if (quantity >= minOrder && available > quantity) {
       setQuantity(quantity);
       setIsDisabled(false);
       setError(" ");

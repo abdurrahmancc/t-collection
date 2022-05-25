@@ -14,6 +14,19 @@ const Address = ({ quantity, inputData, isDisabled }) => {
   const navigate = useNavigate();
   const { price, available, email, img, minOrder, name, _id } = inputData;
 
+  let setQuantity;
+  let subTotal;
+
+  if (!quantity) {
+    setQuantity = minOrder;
+    subTotal = parseInt(inputData?.price) * parseInt(minOrder);
+  }
+  if (quantity) {
+    setQuantity = quantity;
+    subTotal = parseInt(inputData?.price) * parseInt(quantity);
+  }
+
+  console.log(setQuantity, subTotal);
   const {
     register,
     handleSubmit,
@@ -26,17 +39,17 @@ const Address = ({ quantity, inputData, isDisabled }) => {
   if (loading) {
     return <Loading />;
   }
-
+  console.log(user);
   const onSubmit = async (info) => {
     const orderInfo = {
       price,
-      email,
+      email: user.email,
       img,
       productName: name,
       productId: _id,
       userName: user?.displayName,
-      quantity,
-      totalPrice: inputData?.price * quantity,
+      quantity: setQuantity,
+      totalPrice: subTotal,
       address: info.address,
       shippingAddress: info?.Shipping,
       phoneNumber: info?.phone,
@@ -51,8 +64,8 @@ const Address = ({ quantity, inputData, isDisabled }) => {
   const shippingAddress = getValues("Shipping");
   const phoneNumber = getValues("phone");
 
-  const handleNavigate = () => {
-    navigate("/dashboard/my-payment");
+  const handleNavigate = (id) => {
+    navigate(`/dashboard/payment/${id}`);
   };
 
   return (
@@ -179,19 +192,19 @@ const Address = ({ quantity, inputData, isDisabled }) => {
                     </tr>
                     <tr>
                       <td className="border p-2 border-slate-300 ">Quantity</td>
-                      <td className="border p-2 border-slate-300 font-bold">$ {quantity}</td>
+                      <td className="border p-2 border-slate-300 font-bold">
+                        {" "}
+                        {setQuantity} <span className="text-slate-400 font-normal">/pcs</span>
+                      </td>
                     </tr>
                     <tr>
                       <td className="border p-2 border-slate-300 ">Total</td>
-                      <td className="border p-2 border-slate-300 font-bold">
-                        {" "}
-                        $ {inputData?.price * quantity}
-                      </td>
+                      <td className="border p-2 border-slate-300 font-bold"> $ {subTotal}</td>
                     </tr>
                     <tr>
                       <th colSpan={"2"} className="border p-2 border-slate-300 ">
                         <button
-                          onClick={() => handleNavigate()}
+                          onClick={() => handleNavigate(_id)}
                           disabled={isDisabled}
                           className="btn w-full disabled:text-[#ffffff8a] disabled:bg-[#545f5f] btn-primary"
                         >

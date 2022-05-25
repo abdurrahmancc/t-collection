@@ -39,7 +39,9 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
                 <tr>
                   <td className="border p-2 border-slate-300 ">Quantity</td>
                   <td className="border p-2 border-slate-300 ">
-                    {quantity ? quantity : "provide an positive quantity"}
+                    {quantity
+                      ? quantity
+                      : `${minOrder} or provide an positive quantity (Min-order-100)`}
                   </td>
                 </tr>
                 <tr>

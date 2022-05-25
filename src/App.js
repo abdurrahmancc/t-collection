@@ -17,6 +17,7 @@ import MyPayment from "./Components/Hooks/MyPayment";
 import MyProfile from "./Components/Hooks/MyProfile";
 import AllPayments from "./Components/Pages/Dashboard/AllPayments";
 import AllProducts from "./Components/Pages/Dashboard/AllProducts";
+import Payment from "./Components/Hooks/Payment";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               <Route path="my-profile" element={<MyProfile />} />
               <Route path="all-user" element={<AllUser />} />
               <Route path="my-payment" element={<MyPayment />} />
+              <Route path="payment/:id" element={<Payment />} />
               <Route element={<IsAdmin />}>
                 <Route path="all-admin" element={<Admin />} />
                 <Route path="all-payments" element={<AllPayments />} />
