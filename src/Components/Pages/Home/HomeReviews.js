@@ -33,7 +33,7 @@ const HomeReviews = () => {
         {data?.data?.map((review) => (
           <SwiperSlide>
             <div className=" py-10">
-              <div class="card lg:max-w-lg min-h-[300px] mt-5 max-h-[300px]  shadow-xl mx-auto">
+              <div class="card lg:max-w-lg min-h-[320px]  mt-5 max-h-[300px]  shadow-2xl mx-auto">
                 <figure class="px-10 mx-auto max-w-[150px] pt-5">
                   <img
                     className="rounded-full h-[100px] w-[100px] object-cover"
@@ -47,7 +47,7 @@ const HomeReviews = () => {
                     <p>profession: {review?.profession}</p>
                     <p>rating: {review?.rating}</p>
                   </div>
-                  <p>
+                  <p className="pb-11">
                     {review?.description.length > 100
                       ? review?.description.slice(0, 120)
                       : review?.description}

@@ -33,6 +33,22 @@ const Navbar = ({ children }) => {
         </NavLink>
       </li>
       <li className=" py-2">
+        <NavLink
+          to={"/portfolio"}
+          className="rounded-lg hover:text-orange-400 uppercase font-bold btn-sm"
+        >
+          Portfolio
+        </NavLink>
+      </li>
+      <li className=" py-2">
+        <NavLink
+          to={"/blog"}
+          className="rounded-lg hover:text-orange-400 uppercase font-bold btn-sm"
+        >
+          blog
+        </NavLink>
+      </li>
+      <li className=" py-2">
         <NavLink to={"/dashboard"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
           DASHBOARD
         </NavLink>
