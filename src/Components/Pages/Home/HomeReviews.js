@@ -30,26 +30,25 @@ const HomeReviews = () => {
         modules={[Autoplay, FreeMode]}
         className="mySwiper"
       >
-        {data &&
-          data?.data?.map((review) => (
-            <SwiperSlide>
-              <div className=" py-10">
-                <div class="card lg:max-w-lg  mt-5 max-h-[300px]  shadow-xl mx-auto">
-                  <figure class="px-10 mx-auto max-w-[150px] pt-5">
-                    <img className=" rounded-full" src={review?.userPhoto} alt="Shoes" />
-                  </figure>
-                  <div class="card-body items-center text-center">
-                    <h2 class="card-title">{review.name}</h2>
-                    <div className="flex justify-between">
-                      <p>profession: {review?.profession}</p>
-                      <p>profession: {review?.rating}</p>
-                    </div>
-                    <p>{review?.description}</p>
+        {data?.data?.map((review) => (
+          <SwiperSlide>
+            <div className=" py-10">
+              <div class="card lg:max-w-lg min-h-[300px] mt-5 max-h-[300px]  shadow-xl mx-auto">
+                <figure class="px-10 mx-auto max-w-[150px] pt-5">
+                  <img className=" rounded-full" src={review?.userPhoto} alt="Shoes" />
+                </figure>
+                <div class="card-body items-center text-center">
+                  <h2 class="card-title">{review.name}</h2>
+                  <div className="flex justify-between">
+                    <p>profession: {review?.profession}</p>
+                    <p>profession: {review?.rating}</p>
                   </div>
+                  <p>{review?.description.slice(0, 100)}</p>
                 </div>
               </div>
-            </SwiperSlide>
-          ))}
+            </div>
+          </SwiperSlide>
+        ))}
         {/*        <SwiperSlide>
           <img
             src="https://templatekit.jegtheme.com/automobi/wp-content/uploads/sites/271/2022/04/electrica-MW2WXM.png"
