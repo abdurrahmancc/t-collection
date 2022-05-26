@@ -114,7 +114,8 @@ const EditProfile = () => {
             <p className="text-xl">{user?.email}</p>
           </div>
           <div className="mb-5">
-            <p className="">Phone Number</p>
+            {data?.data?.phoneNumber && <p className="">Phone Number</p>}
+
             <p className="text-xl">{data?.data?.phoneNumber}</p>
           </div>
           <div className="flex justify-end items-center">

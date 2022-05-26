@@ -17,6 +17,7 @@ import AllProducts from "./Components/Pages/Dashboard/AllProducts";
 import Payment from "./Components/Hooks/Payment";
 import EditProfile from "./Components/Pages/Dashboard/EditProfile";
 import MyProfile from "./Components/Pages/Dashboard/MyProfile";
+import Review from "./Components/Pages/Dashboard/Review";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route index element={<MyOrder />} />
               <Route path="my-profile" element={<MyProfile />} />
               <Route path="my-order" element={<MyOrder />} />
+              <Route path="review" element={<Review />} />
               <Route path="edit-profile" element={<EditProfile />} />
               <Route path="payment/:id" element={<Payment />} />
               <Route element={<IsAdmin />}>
