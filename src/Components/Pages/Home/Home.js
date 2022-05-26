@@ -1,4 +1,5 @@
 import React from "react";
+import Summery from "../../Hooks/Summery";
 import ClientReviews from "../Dashboard/ClientReviews";
 import Review from "../Dashboard/Review";
 import Banner from "./Banner";
@@ -16,6 +17,7 @@ const Home = () => {
       <Brand />
       <BestProduct />
       <Shop />
+      <Summery />
       <ClientReviews />
       <Newsletter />
     </div>

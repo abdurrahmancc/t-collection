@@ -10,7 +10,6 @@ import Loading from "../../Loading/Loading";
 
 const HomeReviews = () => {
   const { data, isLoading } = useQuery("review", () => axiosPrivet.get("/reviews"));
-  console.log(data);
 
   if (isLoading) {
     return <Loading />;
