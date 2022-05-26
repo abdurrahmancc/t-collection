@@ -24,7 +24,7 @@ const HomeReviews = () => {
         loop={true}
         freeMode={true}
         autoplay={{
-          delay: 2500,
+          delay: 2250000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay, FreeMode]}
@@ -35,15 +35,24 @@ const HomeReviews = () => {
             <div className=" py-10">
               <div class="card lg:max-w-lg min-h-[300px] mt-5 max-h-[300px]  shadow-xl mx-auto">
                 <figure class="px-10 mx-auto max-w-[150px] pt-5">
-                  <img className=" rounded-full" src={review?.userPhoto} alt="Shoes" />
+                  <img
+                    className="rounded-full h-[100px] w-[100px] object-cover"
+                    src={review?.userPhoto}
+                    alt="Shoes"
+                  />
                 </figure>
                 <div class="card-body items-center text-center">
                   <h2 class="card-title">{review.name}</h2>
-                  <div className="flex justify-between">
+                  <div className="flex w-full justify-between">
                     <p>profession: {review?.profession}</p>
-                    <p>profession: {review?.rating}</p>
+                    <p>rating: {review?.rating}</p>
                   </div>
-                  <p>{review?.description.slice(0, 100)}</p>
+                  <p>
+                    {review?.description.length > 100
+                      ? review?.description.slice(0, 120)
+                      : review?.description}
+                    ...
+                  </p>
                 </div>
               </div>
             </div>
