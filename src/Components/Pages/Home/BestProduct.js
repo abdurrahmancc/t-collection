@@ -11,12 +11,12 @@ const BestProduct = () => {
   }
 
   if (services?.data) {
-    services.data.length = 4;
+    services.data.length = 6;
   }
 
   return (
     <div className="container mx-auto mt-24">
-      <div className="mb-10">
+      <div className="mb-10 ">
         <h1 className="text-center  text-4xl font-bold ">BEST SELLER</h1>
         <div className="text-center">
           <progress className="progress h-1 bg-warning w-56">hellooooooooooooooo</progress>
@@ -26,10 +26,12 @@ const BestProduct = () => {
           from here any time any where so sop now
         </p>
       </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1  gap-5 justify-items-center">
-        {services?.data.map((service) => (
-          <ServicesCard service={service} key={service._id}></ServicesCard>
-        ))}
+      <div className="max-w-[1280px] mx-auto">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-5 justify-items-center">
+          {services?.data.map((service) => (
+            <ServicesCard service={service} key={service._id}></ServicesCard>
+          ))}
+        </div>
       </div>
     </div>
   );
