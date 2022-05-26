@@ -6,7 +6,7 @@ import card3 from "../../Assets/banner/banner-3.webp";
 
 const LatestDesign = () => {
   return (
-    <div className="container mx-auto  mt-8 lg:mt-[-50px] ">
+    <div className="container mx-auto  mt-8 mb-20 lg:mt-[-50px] ">
       <div className="grid lg:grid-cols-3  grid-cols-1 gap-8">
         <LatestDesignCard>{card1}</LatestDesignCard>
         <LatestDesignCard>{card2}</LatestDesignCard>

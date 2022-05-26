@@ -1,4 +1,6 @@
 import React from "react";
+import ClientReviews from "../Dashboard/ClientReviews";
+import Review from "../Dashboard/Review";
 import Banner from "./Banner";
 import BestProduct from "./BestProduct";
 import Brand from "./Brand";
@@ -11,9 +13,10 @@ const Home = () => {
     <div className="bg-neutral">
       <Banner></Banner>
       <LatestDesign />
+      <Brand />
       <BestProduct />
       <Shop />
-      <Brand />
+      <ClientReviews />
       <Newsletter />
     </div>
   );

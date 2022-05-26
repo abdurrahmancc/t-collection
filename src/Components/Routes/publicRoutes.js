@@ -1,5 +1,6 @@
 import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
+import ClientReviews from "../Pages/Dashboard/ClientReviews";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Login/Register";

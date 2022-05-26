@@ -3,7 +3,6 @@ import Navbar from "./Components/Shared/Navbar";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
-import NotFound from "./Components/Pages/NotFound/NotFound";
 import Footer from "./Components/Shared/Footer";
 import RequireAuth from "./Components/Hooks/RequireAuth";
 import { publicRoutes } from "./Components/Routes/publicRoutes";
