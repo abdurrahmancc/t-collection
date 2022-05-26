@@ -1,19 +1,25 @@
-import React, { useState } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useQuery } from "react-query";
+import { Navigate, Outlet } from "react-router-dom";
+import axiosPrivet from "../Api/axiosPrivet";
 import Loading from "../Loading/Loading";
+import auth from "./Firebase";
 
 const IsAdmin = () => {
-  const [user, loading] = useState();
-  const location = useLocation();
-  const admin = true;
+  const [user, loading] = useAuthState(auth);
 
-  if (loading) {
-    // return <Loading />;
+  const { data, isLoading, refetch } = useQuery("admin", () =>
+    axiosPrivet.get(`/admin/${user?.email}`)
+  );
+
+  if (loading || isLoading) {
+    return <Loading />;
   }
 
-  if (!admin) {
-    return <Navigate to={"/"} state={{ from: location }} replace />;
-  }
+  const admin = data?.data?.role === "admin";
+
+  if (!admin) return <Navigate to={"/"} />;
 
   return <Outlet />;
 };

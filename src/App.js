@@ -6,18 +6,18 @@ import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import NotFound from "./Components/Pages/NotFound/NotFound";
 import Footer from "./Components/Shared/Footer";
 import RequireAuth from "./Components/Hooks/RequireAuth";
-import BuyNow from "./Components/Pages/Home/BuyNow/BuyNow";
 import { publicRoutes } from "./Components/Routes/publicRoutes";
 import { privetRoutes } from "./Components/Routes/PrivetRoutes";
 import IsAdmin from "./Components/Hooks/IsAdmin";
 import AddProduct from "./Components/Pages/Dashboard/AddProduct";
 import AllUser from "./Components/Pages/Dashboard/AllUser";
 import Admin from "./Components/Pages/Dashboard/Admin";
-import MyPayment from "./Components/Hooks/MyPayment";
-import MyProfile from "./Components/Hooks/MyProfile";
+import MyOrder from "./Components/Hooks/MyOrder";
 import AllPayments from "./Components/Pages/Dashboard/AllPayments";
 import AllProducts from "./Components/Pages/Dashboard/AllProducts";
 import Payment from "./Components/Hooks/Payment";
+import EditProfile from "./Components/Pages/Dashboard/EditProfile";
+import MyProfile from "./Components/Pages/Dashboard/MyProfile";
 
 function App() {
   return (
@@ -34,14 +34,15 @@ function App() {
           </Route>
           <Route element={<RequireAuth />}>
             <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<MyPayment />} />
-              <Route path="add-service" element={<AddProduct />} />
+              <Route index element={<MyOrder />} />
               <Route path="my-profile" element={<MyProfile />} />
-              <Route path="all-user" element={<AllUser />} />
-              <Route path="my-payment" element={<MyPayment />} />
+              <Route path="my-order" element={<MyOrder />} />
+              <Route path="edit-profile" element={<EditProfile />} />
               <Route path="payment/:id" element={<Payment />} />
               <Route element={<IsAdmin />}>
+                <Route path="add-service" element={<AddProduct />} />
                 <Route path="all-admin" element={<Admin />} />
+                <Route path="all-user" element={<AllUser />} />
                 <Route path="all-payments" element={<AllPayments />} />
                 <Route path="all-products" element={<AllProducts />} />
               </Route>

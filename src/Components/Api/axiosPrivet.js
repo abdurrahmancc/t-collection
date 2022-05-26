@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosPrivet = axios.create({ baseURL: "http://localhost:5000" });
+const axiosPrivet = axios.create({ baseURL: "https://blooming-scrubland-82321.herokuapp.com" });
 
 axiosPrivet.interceptors.request.use(
   function (config) {

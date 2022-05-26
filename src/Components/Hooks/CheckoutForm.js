@@ -84,9 +84,8 @@ const CheckoutForm = ({ order }) => {
         transactionId: paymentIntent?.id,
       };
 
-      const { data } = axiosPrivet.patch(`/order/${_id}`, { payment });
+      const { data } = await axiosPrivet.patch(`/order/${_id}`, { payment });
       setLoading(!loading);
-
       setLoading(loading);
       navigate(from, { replace: true });
     }

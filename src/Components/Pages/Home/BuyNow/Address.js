@@ -72,7 +72,7 @@ const Address = ({ quantity, inputData, isDisabled, refetch }) => {
   const phoneNumber = getValues("phone");
 
   const handleNavigate = () => {
-    navigate(`/dashboard/my-payment`);
+    navigate(`/dashboard/my-order`);
   };
 
   // console.log(shippingAddress);

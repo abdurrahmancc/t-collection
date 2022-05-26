@@ -6,7 +6,7 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputError, setInputError] = useState("");
   const [inputQuantity, setInputQuantity] = useState("");
-  console.log(inputQuantity);
+
   return (
     <div className="container mx-auto my-24">
       <div className="grid h-full md:grid-cols-2 lg:grid-cols-3  gap-5 items-center ">
