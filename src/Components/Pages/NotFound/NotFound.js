@@ -1,9 +1,11 @@
 import React from "react";
-
+import img from "../../Assets/banner/404.gif";
 const NotFound = () => {
   return (
-    <div className="flex justify-center h-screen items-center">
-      <h1 className="text-6xl">not found page</h1>
+    <div className="h-screen ">
+      <div className="flex h-screen">
+        <img className="w-screen" src={img} alt="" />
+      </div>
     </div>
   );
 };
