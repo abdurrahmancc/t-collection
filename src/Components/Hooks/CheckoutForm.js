@@ -2,6 +2,7 @@ import { CardElement, ElementsConsumer, useElements, useStripe } from "@stripe/r
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useQuery } from "react-query";
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosPrivet from "../Api/axiosPrivet";
 import Loading from "../Loading/Loading";
 
@@ -13,6 +14,9 @@ const CheckoutForm = ({ order }) => {
   const { totalPrice, email, userName, _id } = order?.data;
   const [transactionId, setTransactionId] = useState("");
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const { data, isLoading } = useQuery("paymentPost", () =>
     axiosPrivet.post("/create-payment-intent", {
@@ -72,14 +76,19 @@ const CheckoutForm = ({ order }) => {
       setCardError("");
       setTransactionId(paymentIntent.id);
       setSuccess("Congrats! your payment completed");
-      setLoading(loading);
+
       toast.success("Congrats! your payment completed", { id: "payment-success" });
       const payment = {
         email: email,
         order: _id,
         transactionId: paymentIntent?.id,
       };
+
       const { data } = axiosPrivet.patch(`/order/${_id}`, { payment });
+      setLoading(!loading);
+
+      setLoading(loading);
+      navigate(from, { replace: true });
     }
   };
   return (

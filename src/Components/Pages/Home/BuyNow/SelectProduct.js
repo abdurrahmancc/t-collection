@@ -5,7 +5,8 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
   const { available, description, price, img, name, minOrder, _id } = data;
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputError, setInputError] = useState("");
-
+  const [inputQuantity, setInputQuantity] = useState("");
+  console.log(inputQuantity);
   return (
     <div className="container mx-auto my-24">
       <div className="grid h-full md:grid-cols-2 lg:grid-cols-3  gap-5 items-center ">
@@ -61,10 +62,15 @@ const SelectProduct = ({ handleSubmitFrom, error, quantity, data }) => {
                     <input
                       type="text"
                       name="quantity"
+                      onChange={(e) => setInputQuantity(e.target.value)}
                       placeholder={`Enter quantity amount ( Min-order ${minOrder} )`}
                       className="input input-bordered w-full"
                     />
-                    <button type="submit" className="btn btn-primary">
+                    <button
+                      disabled={parseInt(inputQuantity) < parseInt(minOrder)}
+                      type="submit"
+                      className="btn btn-primary"
+                    >
                       submit
                     </button>
                   </label>

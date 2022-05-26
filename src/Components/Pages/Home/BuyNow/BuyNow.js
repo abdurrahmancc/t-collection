@@ -13,7 +13,7 @@ const BuyNow = () => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const { id } = useParams();
-  const { data, isLoading } = useQuery(["buyNow", id], () => Fetcher.get(`/buyNow/${id}`));
+  const { data, isLoading, refetch } = useQuery(["buyNow", id], () => Fetcher.get(`/buyNow/${id}`));
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -55,7 +55,12 @@ const BuyNow = () => {
         quantity={quantity}
         handleSubmitFrom={handleSubmitFrom}
       />
-      <Address inputData={data.data} isDisabled={isDisabled} quantity={quantity} />
+      <Address
+        inputData={data.data}
+        refetch={refetch}
+        isDisabled={isDisabled}
+        quantity={quantity}
+      />
     </div>
   );
 };

@@ -8,13 +8,13 @@ import toast from "react-hot-toast";
 import Loading from "../../../Loading/Loading";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const Address = ({ quantity, inputData, isDisabled }) => {
+const Address = ({ quantity, inputData, isDisabled, refetch }) => {
   const [user, loading] = useAuthState(auth);
   const [inputError, setInputError] = useState("");
   const navigate = useNavigate();
   const { price, available, email, img, minOrder, name, _id } = inputData;
 
-  console.log(inputData);
+  // console.log(inputData);
 
   let setQuantity;
   let subTotal;
@@ -28,7 +28,7 @@ const Address = ({ quantity, inputData, isDisabled }) => {
     subTotal = parseInt(inputData?.price) * parseInt(quantity);
   }
 
-  console.log(setQuantity, subTotal);
+  // console.log(setQuantity, subTotal);
   const {
     register,
     handleSubmit,
@@ -41,7 +41,7 @@ const Address = ({ quantity, inputData, isDisabled }) => {
   if (loading) {
     return <Loading />;
   }
-  console.log(user);
+  // console.log(user);
   const onSubmit = async (info) => {
     const orderInfo = {
       price,
@@ -59,6 +59,11 @@ const Address = ({ quantity, inputData, isDisabled }) => {
     const { data: order } = await axiosPrivet.post("/order", orderInfo);
     if (order?.insertedId) {
       toast.success("order success & please proceed to pay", { id: "order-success" });
+      const info = parseInt(available) - setQuantity;
+      const { data: update } = await axiosPrivet.patch(`/update-available/${_id}`, {
+        available: info,
+      });
+      refetch();
     }
   };
 
@@ -70,6 +75,7 @@ const Address = ({ quantity, inputData, isDisabled }) => {
     navigate(`/dashboard/my-payment`);
   };
 
+  // console.log(shippingAddress);
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -161,7 +167,7 @@ const Address = ({ quantity, inputData, isDisabled }) => {
                   <thead>
                     <tr>
                       <th colSpan={"2"} className="border p-2 border-slate-300 ">
-                        Details
+                        Order Details
                       </th>
                     </tr>
                   </thead>
@@ -207,7 +213,7 @@ const Address = ({ quantity, inputData, isDisabled }) => {
                       <th colSpan={"2"} className="border p-2 border-slate-300 ">
                         <button
                           onClick={() => handleNavigate()}
-                          disabled={isDisabled}
+                          disabled={isDisabled || !shippingAddress}
                           className="btn w-full disabled:text-[#ffffff8a] disabled:bg-[#545f5f] btn-primary"
                         >
                           {" "}
