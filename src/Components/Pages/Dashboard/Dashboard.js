@@ -1,7 +1,29 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useQuery } from "react-query";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import axiosPrivet from "../../Api/axiosPrivet";
+import auth from "../../Hooks/Firebase";
+import Loading from "../../Loading/Loading";
 
 const Dashboard = () => {
+  const [user, loading] = useAuthState(auth);
+  const {
+    data: users,
+    isLoading,
+    refetch,
+  } = useQuery("all-users", () => axiosPrivet.get("/all-user"));
+
+  let admin;
+  const existUser = users?.data.find((u) => u?.email === user?.email);
+  if (existUser?.role === "admin") {
+    admin = true;
+  }
+  if (loading || isLoading) {
+    return <Loading />;
+  }
+
+  console.log(user, users, admin);
   return (
     <>
       <div className="drawer min-h-screen drawer-mobile">
@@ -21,24 +43,28 @@ const Dashboard = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/dashboard/my-order"}>My Order</NavLink>
+              <NavLink className={admin && "hidden"} to={"/dashboard/my-order"}>
+                My Order
+              </NavLink>
             </li>
-            <li>
+            <li className={!admin && "hidden"}>
               <NavLink to={"/dashboard/all-payments"}>All Payments</NavLink>
             </li>
             <li>
-              <NavLink to={"/dashboard/review"}>Review</NavLink>
+              <NavLink to={"/dashboard/review"} className={admin && "hidden"}>
+                Review
+              </NavLink>
             </li>
-            <li>
+            <li className={!admin && "hidden"}>
               <NavLink to={"/dashboard/add-service"}>Add Product</NavLink>
             </li>
-            <li>
+            <li className={!admin && "hidden"}>
               <NavLink to={"/dashboard/all-products"}>All Products</NavLink>
             </li>
-            <li>
+            <li className={!admin && "hidden"}>
               <NavLink to={"/dashboard/all-user"}>All User</NavLink>
             </li>
-            <li>
+            <li className={!admin && "hidden"}>
               <NavLink to={"/dashboard/all-admin"}>All admin</NavLink>
             </li>
           </ul>

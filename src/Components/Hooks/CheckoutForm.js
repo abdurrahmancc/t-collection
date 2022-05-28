@@ -75,8 +75,22 @@ const CheckoutForm = ({ order }) => {
     } else {
       setCardError("");
       setTransactionId(paymentIntent.id);
-      setSuccess("Congrats! your payment completed");
 
+      let payments = {};
+      const storePayment = localStorage.getItem("Payment-list");
+      if (storePayment) {
+        payments = JSON.parse(storePayment);
+      }
+      const isPayment = payments[paymentIntent.id];
+      if (isPayment === "pending") {
+        const update = "true";
+        payments[paymentIntent.id] = update;
+      } else {
+        payments[paymentIntent.id] = "pending";
+      }
+      localStorage.setItem("Payment-list", JSON.stringify(payments));
+
+      setSuccess("Congrats! your payment completed");
       toast.success("Congrats! your payment completed", { id: "payment-success" });
       const payment = {
         email: email,

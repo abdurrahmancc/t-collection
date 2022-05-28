@@ -56,7 +56,7 @@ const BuyNow = () => {
         handleSubmitFrom={handleSubmitFrom}
       />
       <Address
-        inputData={data.data}
+        inputData={data?.data}
         refetch={refetch}
         isDisabled={isDisabled}
         quantity={quantity}

@@ -60,7 +60,7 @@ const AllUser = () => {
           {users?.data?.map((user, index) => {
             return (
               <>
-                <tr key={user._id} className="hover:bg-[rgb(42,31,114)]">
+                <tr key={user?._id} className="hover:bg-[rgb(42,31,114)]">
                   <td colSpan={1} className="pl-5 py-2 ">
                     {index + 1}
                   </td>

@@ -8,7 +8,9 @@ const ClientReviews = () => {
       <div className="text-center">
         <progress className="progress h-1 bg-warning w-56">hellooooooooooooooo</progress>
       </div>
-      <HomeReviews />
+      <div>
+        <HomeReviews />
+      </div>
     </div>
   );
 };

@@ -32,10 +32,7 @@ const Review = () => {
 
     console.log(info);
 
-    const { data: result } = await axiosPrivet.post(
-      "https://blooming-scrubland-82321.herokuapp.com/review",
-      info
-    );
+    const { data: result } = await axiosPrivet.post("/review", info);
     if (result.insertedId) {
       reset();
       toast.success("success", { id: "create-Success" });
