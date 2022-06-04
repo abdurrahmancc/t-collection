@@ -14,6 +14,7 @@ const HomeReviews = () => {
   if (isLoading) {
     return <Loading />;
   }
+
   return (
     <div className="">
       <Swiper

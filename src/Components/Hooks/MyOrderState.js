@@ -11,7 +11,7 @@ const MyOrderState = ({ transactionId, orderId, orderPaid }) => {
   isPaid = paymentList[transactionId];
 
   return (
-    <div>
+    <div className="flex justify-center">
       {orderPaid ? (
         isPaid === "true" ? (
           <span className="text-green-500">paid</span>

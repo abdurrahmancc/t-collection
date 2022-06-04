@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Summery from "../../Hooks/Summery";
+import ScrollBtn from "../../Shared/ScrollBtn";
 import ClientReviews from "../Dashboard/ClientReviews";
-import Review from "../Dashboard/Review";
 import Banner from "./Banner";
 import BestProduct from "./BestProduct";
 import Brand from "./Brand";
@@ -20,6 +20,7 @@ const Home = () => {
       <Summery />
       <ClientReviews />
       <Newsletter />
+      <ScrollBtn />
     </div>
   );
 };

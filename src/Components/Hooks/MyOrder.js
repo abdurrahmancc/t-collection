@@ -9,8 +9,10 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Loading from "../Loading/Loading";
 import MyOrderState from "./MyOrderState";
+import DeleteOrderModal from "./DeleteOrderModal";
 
 const MyOrder = () => {
+  const [deleteModal, setDeleteModal] = useState(null);
   const [user, loading] = useAuthState(auth);
   const {
     data: orders,
@@ -20,13 +22,10 @@ const MyOrder = () => {
 
   //delete product
   const handleDelete = async (id) => {
-    const confirm = window.confirm();
-    if (confirm) {
-      const { data } = await Fetcher.delete(`/order-delete/${id}`);
-      if (data?.acknowledged) {
-        toast.success("Deleted", { id: "delete-product" });
-        refetch();
-      }
+    const { data } = await Fetcher.delete(`/order-delete/${id}`);
+    if (data?.acknowledged) {
+      toast.success("Deleted", { id: "delete-product" });
+      refetch();
     }
   };
 
@@ -60,7 +59,9 @@ const MyOrder = () => {
               <th colSpan={3} className="text-center">
                 Image
               </th>
-              <th colSpan={2}>status</th>
+              <th colSpan={2} className={"text-center"}>
+                status
+              </th>
 
               <th colSpan={3} className={"pr-5 text-center"}>
                 Delete / T:Id
@@ -112,9 +113,9 @@ const MyOrder = () => {
                             ...
                           </span>
                         ) : (
-                          <span className="flex justify-center">
-                            <FaTrashAlt className="" onClick={() => handleDelete(order?._id)} />
-                          </span>
+                          <label for="delete-Order-Modal" className="flex justify-center">
+                            <FaTrashAlt className="" onClick={() => setDeleteModal(order)} />
+                          </label>
                         )}
                       </td>
                     </tr>
@@ -123,6 +124,9 @@ const MyOrder = () => {
               })}
           </tbody>
         </table>
+        {deleteModal && (
+          <DeleteOrderModal handleDelete={handleDelete} order={deleteModal}></DeleteOrderModal>
+        )}
       </div>
     </>
   );

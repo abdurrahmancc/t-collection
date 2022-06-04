@@ -7,11 +7,13 @@ const ConfirmDeleteModal = ({ product, handleDelete }) => {
       <input type="checkbox" id="confirm-Delete-Modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box bg-[#120E43] ">
-          <h3 className="font-bold text-center text-xl my-10">
+          <h3 className="font-bold text-center text-xl mt-10">
             Are you sure want to delete {product?.name} ?
           </h3>
-          <p className="text-center">Email: {product?.email}</p>
-
+          <p className="text-center mb-10">Email: {product?.email}</p>
+          <div>
+            <img className="w-6/12 mx-auto" src={product?.img} alt="" />
+          </div>
           <div className="flex justify-around mt-10">
             <label htmlFor="confirm-Delete-Modal" className="btn  ">
               Cancel

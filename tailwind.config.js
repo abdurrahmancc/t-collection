@@ -13,6 +13,7 @@ module.exports = {
           success: "#1BBB70",
           warning: "#DF7E07",
           error: "#FA5C5C",
+          textColor: "#000000",
         },
       },
       {
@@ -26,6 +27,7 @@ module.exports = {
           success: "#1BBB70",
           warning: "#F59E0B",
           error: "#FB7185",
+          textColor: "#FFFFFF",
         },
       },
     ],

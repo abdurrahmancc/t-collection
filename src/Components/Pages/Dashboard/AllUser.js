@@ -9,19 +9,16 @@ import { async } from "@firebase/util";
 import { FaTrashAlt } from "react-icons/fa";
 
 const AllUser = () => {
-  const [admin, setAdmin] = useState(null);
+  const [confirmDelete, setConfirmDelete] = useState(null);
   const { data: users, refetch } = useQuery("all-user", () => axiosPrivet.get("all-user"));
 
   //delete product
   const handleDelete = async (user) => {
     const email = { email: user?.email };
-    const confirm = window.confirm();
-    if (confirm) {
-      const { data } = await axiosPrivet.delete(`/user-delete/${user?._id}`, email);
-      if (data?.acknowledged) {
-        toast.success("Deleted", { id: "delete-user" });
-        refetch();
-      }
+    const { data } = await axiosPrivet.delete(`/user-delete/${user?._id}`, email);
+    if (data?.acknowledged) {
+      toast.success("Deleted", { id: "delete-user" });
+      refetch();
     }
   };
 
@@ -82,9 +79,12 @@ const AllUser = () => {
                   </td>
 
                   <td colSpan={1} className="text-right py-2">
-                    <span className="w-4 mx-auto">
+                    <label htmlFor="confirm-Delete-Modal" className=" w-4 mx-auto">
+                      <FaTrashAlt onClick={() => setConfirmDelete(user)} />
+                    </label>
+                    {/* <span className="w-4 mx-auto">
                       <FaTrashAlt onClick={() => handleDelete(user)} />
-                    </span>
+                    </span> */}
                   </td>
                 </tr>
               </>
@@ -92,6 +92,9 @@ const AllUser = () => {
           })}
         </tbody>
       </table>
+      {confirmDelete && (
+        <ConfirmDeleteModal handleDelete={handleDelete}> {confirmDelete}</ConfirmDeleteModal>
+      )}
     </>
   );
 };

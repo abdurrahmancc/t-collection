@@ -1,30 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import Fetcher from "../../Api/Fetcher";
 import { FaTrashAlt } from "react-icons/fa";
 import { async } from "@firebase/util";
-import ConfirmDeleteModal from "./ConfirmDeleteModal";
 import toast from "react-hot-toast";
 import axiosPrivet from "../../Api/axiosPrivet";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
 const AllProducts = () => {
+  const [confirmDelete, setConfirmDelete] = useState(null);
+
   const { data: products, refetch } = useQuery("all-products", () =>
     axiosPrivet.get("/all-products")
   );
 
   //delete product
   const handleDelete = async (id) => {
-    const confirm = window.confirm();
-    if (confirm) {
-      const { data } = await Fetcher.delete(`/product-delete/${id}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-      if (data?.acknowledged) {
-        toast.success("Deleted", { id: "delete-product" });
-        refetch();
-      }
+    const { data } = await Fetcher.delete(`/product-delete/${id}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    if (data?.acknowledged) {
+      toast.success("Deleted", { id: "delete-product" });
+      refetch();
     }
   };
 
@@ -67,9 +66,9 @@ const AllProducts = () => {
                     <img className="w-10" src={product?.img} alt="" />
                   </td>
                   <td colSpan={1} className="text-right py-2">
-                    <span className="w-4 mx-auto">
-                      <FaTrashAlt onClick={() => handleDelete(product?._id)} />
-                    </span>
+                    <label htmlFor="confirm-Delete-Modal" className=" w-4 mx-auto">
+                      <FaTrashAlt onClick={() => setConfirmDelete(product)} />
+                    </label>
                   </td>
                 </tr>
               </>
@@ -77,6 +76,11 @@ const AllProducts = () => {
           })}
         </tbody>
       </table>
+      {confirmDelete && (
+        <ConfirmDeleteModal handleDelete={handleDelete} product={confirmDelete}>
+          {" "}
+        </ConfirmDeleteModal>
+      )}
     </>
   );
 };

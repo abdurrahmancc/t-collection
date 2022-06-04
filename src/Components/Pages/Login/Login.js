@@ -45,6 +45,7 @@ const Login = () => {
     console.log(error, gError, sError);
   }
 
+  console.log("token", token);
   if (token) {
     toast.success("success", { id: "login-Success" });
     reset();
