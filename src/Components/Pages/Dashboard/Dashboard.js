@@ -23,7 +23,7 @@ const Dashboard = () => {
     return <Loading />;
   }
 
-  console.log(user, users, admin);
+  // console.log(user, users, admin);
   return (
     <>
       <div className="drawer min-h-screen drawer-mobile">

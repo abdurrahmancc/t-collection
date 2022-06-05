@@ -23,8 +23,11 @@ const Navbar = ({ children }) => {
         </NavLink>
       </li>
       <li className=" py-2">
-        <NavLink to={"/about"} className="rounded-lg hover:text-orange-400 font-bold btn-sm">
-          ABOUT
+        <NavLink
+          to={"/products"}
+          className="rounded-lg uppercase hover:text-orange-400 font-bold btn-sm"
+        >
+          Products
         </NavLink>
       </li>
       <li className=" py-2">

@@ -1,0 +1,42 @@
+import React from "react";
+import { useQuery } from "react-query";
+import Fetcher from "../Api/Fetcher";
+import Loading from "../Loading/Loading";
+import ServicesCard from "../Pages/Home/ServicesCard";
+import ScrollBtn from "../Shared/ScrollBtn";
+
+const Products = () => {
+  const { data: services, isLoading } = useQuery("homeServices", () => Fetcher.get("/services"));
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
+    <>
+      <section>
+        <div className="container mx-auto my-24">
+          <div className="mb-10 ">
+            <h1 className="text-center  text-4xl font-bold ">BEST SELLER</h1>
+            <div className="text-center">
+              <progress className="progress h-1 bg-warning w-56">hellooooooooooooooo</progress>
+            </div>
+            <p className="text-center mt-3">
+              All best seller product are now available for you and your can buy <br /> this product
+              from here any time any where so sop now
+            </p>
+          </div>
+          <div className="max-w-[1280px] mx-auto">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-5 justify-items-center">
+              {services?.data.map((service) => (
+                <ServicesCard service={service} key={service._id}></ServicesCard>
+              ))}
+            </div>
+          </div>
+        </div>
+        <ScrollBtn />
+      </section>
+    </>
+  );
+};
+
+export default Products;

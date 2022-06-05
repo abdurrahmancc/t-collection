@@ -28,7 +28,7 @@ const ScrollBtn = () => {
   return (
     <>
       <button
-        className=" cursor-pointer fixed bottom-96 right-10 text-[2rem]"
+        className=" cursor-pointer fixed bottom-10 right-10 text-[2rem]"
         onClick={scrollToTop}
         style={{ display: visible ? "inline" : "none" }}
       >

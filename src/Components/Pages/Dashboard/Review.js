@@ -1,19 +1,26 @@
-import React from "react";
+import { async } from "@firebase/util";
+import axios from "axios";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import axiosPrivet from "../../Api/axiosPrivet";
 import auth from "../../Hooks/Firebase";
 import Loading from "../../Loading/Loading";
+import { FaUpload } from "react-icons/fa";
 
 const Review = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [user, loading] = useAuthState(auth);
+  const [inputImage, setInputImage] = useState("");
+  const [imageName, setImageName] = useState("");
+  const [isRequire, setRequire] = useState(true);
 
   const {
     register,
     handleSubmit,
-
     reset,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -22,23 +29,53 @@ const Review = () => {
   }
 
   const onSubmit = async (data) => {
-    const info = {
-      name: data.name,
-      profession: data.profession,
-      userPhoto: data.image,
-      description: data.description,
-      rating: data.rating,
-    };
-
-    console.log(info);
-
-    const { data: result } = await axiosPrivet.post("/review", info);
-    if (result.insertedId) {
-      reset();
-      toast.success("success", { id: "create-Success" });
+    setIsLoading(true);
+    if (!inputImage) {
+      setRequire(false);
+      toast.error("attach your image", { id: "attach-img" });
+      setIsLoading(false);
+      return;
     }
+    const imageStoreKey = "309363503ddfae2658a7350778e98cb0";
+    const formData = new FormData();
+    formData.append("image", inputImage);
+
+    const url = `https://api.imgbb.com/1/upload?key=${imageStoreKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setIsLoading(false);
+        if (result.success) {
+          const image = result.data.url;
+          const info = {
+            name: data.name,
+            profession: data.profession,
+            userPhoto: image,
+            description: data.description,
+            rating: data.rating,
+          };
+
+          (async () => {
+            const { data: result } = await axiosPrivet.post("/review", info);
+            if (result.insertedId) {
+              reset();
+              toast.success("success", { id: "create-Success" });
+            }
+          })();
+        }
+      });
   };
 
+  const handleImage = (e) => {
+    setImageName(e.target.files[0].name);
+    setInputImage(e.target.files[0]);
+    setRequire(true);
+  };
+
+  console.log(inputImage);
   return (
     <>
       <div className=" items-center w-full ">
@@ -78,19 +115,6 @@ const Review = () => {
 
                   <div className="form-control">
                     <label className="label pb-1">
-                      <span className="label-text">Image</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Image URL"
-                      className="input text-black input-bordered"
-                      {...register("image", {
-                        required: { value: true, message: "Image URL is require" },
-                      })}
-                    />
-                  </div>
-                  <div className="form-control">
-                    <label className="label pb-1">
                       <span className="label-text">Rating</span>
                     </label>
                     <input
@@ -124,6 +148,34 @@ const Review = () => {
                     />
                   </div>
 
+                  <div className="form-control">
+                    <label htmlFor="inputImg" className="label pb-1">
+                      <div
+                        className={`flex justify-center py-6 flex-col gap-5 items-center w-full border-dashed border-2 ${
+                          isRequire || "border-red-500"
+                        }`}
+                      >
+                        <FaUpload className="text-gray-500 w-8 h-8 cursor-pointer" />{" "}
+                        {imageName ? (
+                          <span className="text-black">{imageName}</span>
+                        ) : (
+                          <span className="text-black">upload image</span>
+                        )}
+                      </div>
+                    </label>
+                    <input
+                      type="file"
+                      id="inputImg"
+                      placeholder="Image URL"
+                      className="input text-black hidden w-full h-full pl-0 input-bordered"
+                      /* {...register("image", {
+                        required: { value: true, message: "Image URL is require" },
+                      })} */
+                      onChange={handleImage}
+                    />
+
+                    {isLoading && <span className="text-black">Loading...</span>}
+                  </div>
                   <div className="form-control mt-6">
                     <button type="submit" className="btn btn-primary">
                       Review
