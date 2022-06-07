@@ -16,14 +16,10 @@ const Products = () => {
       <section>
         <div className="container mx-auto my-24">
           <div className="mb-10 ">
-            <h1 className="text-center  text-4xl font-bold ">BEST SELLER</h1>
+            <h1 className="text-center  text-4xl font-bold uppercase">All Products</h1>
             <div className="text-center">
               <progress className="progress h-1 bg-warning w-56">hellooooooooooooooo</progress>
             </div>
-            <p className="text-center mt-3">
-              All best seller product are now available for you and your can buy <br /> this product
-              from here any time any where so sop now
-            </p>
           </div>
           <div className="max-w-[1280px] mx-auto">
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-5 justify-items-center">
